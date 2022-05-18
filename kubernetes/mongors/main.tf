@@ -215,6 +215,8 @@ resource "kubernetes_job" "init" {
             "--eval", local.initCmd
           ]
         }
+
+        restart_policy = "OnFailure"
       }
     }
   }
