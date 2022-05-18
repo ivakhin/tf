@@ -192,7 +192,6 @@ resource "kubernetes_job" "init" {
   }
 
   spec {
-    completions                = 1
     ttl_seconds_after_finished = 3600
 
     template {
