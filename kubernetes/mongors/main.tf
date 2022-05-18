@@ -1,14 +1,16 @@
 locals {
   datadir = { name = "data", path = "/data/db" }
-  pingCmd = ["mongo", "--eval", "db.adminCommand('ping')"]
-  initCmd = format("rs.initiate(%s)", local.initJson)
-  initJson = var.replicas > 0 ? jsonencode({
+  ping    = ["mongo", "--eval", "db.adminCommand('ping')"]
+
+  initCmd = format("rs.initiate(%s)", jsonencode({
     _id     = var.replicaSet
     members = local.members
-  }) : ""
+  }))
+
   hosts = [
     for i in range(var.replicas) : format("${var.name}-%d.${kubernetes_service.service.metadata.0.name}:${var.port}", i)
   ]
+
   members = [
     for i, host in local.hosts : {
       _id  = i,
@@ -84,7 +86,7 @@ resource "kubernetes_stateful_set" "mongodb" {
 
           startup_probe {
             exec {
-              command = local.pingCmd
+              command = local.ping
             }
 
             initial_delay_seconds = 5
@@ -96,7 +98,7 @@ resource "kubernetes_stateful_set" "mongodb" {
 
           readiness_probe {
             exec {
-              command = local.pingCmd
+              command = local.ping
             }
 
             initial_delay_seconds = 5
