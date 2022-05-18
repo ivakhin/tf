@@ -1,10 +1,8 @@
 variable "namespace" {}
 
 variable "name" {
-  default     = "mongo"
   description = <<EOT
 Base name for all kubernetes resource names and labels. Try to make it unique.
-Default value is only suitable for local single deployment.
 A good template for non-local deployments is [PROJECT_NAME][ENVIRONMENT][DATA_CENTER_NAME][GIT_BRANCH_SLUG].
 EOT
 }
