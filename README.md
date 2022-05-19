@@ -9,7 +9,7 @@ Mongodb replica set deployment without authorization for local and stage environ
 Example:
 ```terraform
 module "mongo_full" {
-  source       = "github.com/ivakhin/tf/kubernetes/mongors"
+  source       = "github.com/ivakhin/tf//kubernetes/mongors"
   name         = "someapp-local-main-mongo"
   namespace    = "someapp"
   storageClass = "standard"
@@ -29,7 +29,7 @@ module "mongo_full" {
 }
 
 module "mongo_quick" {
-  source       = "github.com/ivakhin/tf/kubernetes/mongors"
+  source       = "github.com/ivakhin/tf//kubernetes/mongors"
   name         = "mongo"
   namespace    = "someapp"
   labels = {
